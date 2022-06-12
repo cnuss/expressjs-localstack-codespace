@@ -6,8 +6,6 @@ services:
       dockerfile: Dockerfile
       args:
         VARIANT: 16-bullseye
-    ports:
-        - '3000:3000'
     working_dir: /workspace
     volumes:
       - ..:/workspace:cached
