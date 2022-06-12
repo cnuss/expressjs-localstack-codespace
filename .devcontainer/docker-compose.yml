@@ -19,6 +19,7 @@ services:
     image: localstack/localstack
     restart: unless-stopped
     ports:
+      - '3000:3000'
       - '4510-4559:4510-4559'
       - '4566:4566'
     environment:
