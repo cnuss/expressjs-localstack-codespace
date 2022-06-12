@@ -11,7 +11,10 @@
       "extensions": ["dbaeumer.vscode-eslint"]
     }
   },
-  "forwardPorts": [3000],
+  "forwardPorts": [3000,4566],
   "postCreateCommand": "yarn",
-  "postAttachCommand": "yarn start"
+  "postAttachCommand": "yarn start",
+  "features": {
+    "docker-from-docker": "latest"
+  }
 }

@@ -6,10 +6,8 @@ services:
       dockerfile: Dockerfile
       args:
         VARIANT: 16-bullseye
-    depends_on:
-        - localstack
     ports:
-        - 3000:3000
+        - '3000:3000'
     working_dir: /workspace
     volumes:
       - ..:/workspace:cached
@@ -17,8 +15,7 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
-    links:
-      - localstack
+    network_mode: service:localstack
 
   localstack:
     image: localstack/localstack
