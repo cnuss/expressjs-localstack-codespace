@@ -15,6 +15,7 @@
   "postCreateCommand": "yarn",
   "postAttachCommand": "yarn start",
   "features": {
+    "aws-cli": "latest",
     "docker-from-docker": "latest"
   }
 }

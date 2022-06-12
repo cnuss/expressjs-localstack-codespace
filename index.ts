@@ -1,5 +1,5 @@
 import express from "express";
-import AWS, { Endpoint } from "aws-sdk";
+import AWS from "aws-sdk";
 
 const BUCKET_NAME = `test-${process.env["CODESPACE_NAME"]}`;
 const TAG_NAME = `X-Last-Updated`;
@@ -7,12 +7,14 @@ const TAG_NAME = `X-Last-Updated`;
 const s3 = new AWS.S3({
   endpoint: "http://localhost:4566",
   region: "us-east-1",
+  credentials: { accessKeyId: 'localstack', 'secretAccessKey': 'localstack' },
 });
 
 const app = express();
 
 app.get("/", async (req, res) => {
   const tagging = await s3.getBucketTagging({ Bucket: BUCKET_NAME }).promise();
+  console.log("!!!! tagging", tagging);
   const tagSet = (tagging.TagSet || []).find((ts) => ts.Key === TAG_NAME);
   if (!tagSet) {
     res.send("Tag is not set\n");
@@ -24,7 +26,7 @@ app.get("/", async (req, res) => {
 const updateTag = async () => {
   console.log("Updating tag on bucket");
   const now = new Date().toISOString();
-  await s3
+  const response = await s3
     .putBucketTagging({
       Bucket: BUCKET_NAME,
       Tagging: {
@@ -32,6 +34,7 @@ const updateTag = async () => {
       },
     })
     .promise();
+  console.log("!!! response", response)
   return now;
 };
 
